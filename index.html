@@ -11,16 +11,58 @@
 <body>
 
 <div class="page">
-
-  <div class="receipt">
+  <div class="receipt" id="receipt">
     <div class="tear tear-top"></div>
 
     <header class="receipt-head">
-      <h1>LEDGER</h1>
-      <p class="sub">personal expense receipt</p>
+      <div class="head-row">
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+        <div class="head-titles">
+          <h1>LEDGER</h1>
+          <p class="sub">personal expense receipt</p>
+        </div>
+        <button id="settingsToggle" class="icon-btn" aria-label="Budget settings" title="Budget settings">⚙</button>
+      </div>
       <p class="date" id="today"></p>
-      <div class="dash"></div>
     </header>
+
+    <section class="settings-panel hidden" id="settingsPanel">
+      <label for="budgetInput">Monthly budget ($)</label>
+      <div class="settings-row">
+        <input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1">
+        <button id="saveBudget">Save</button>
+      </div>
+    </section>
+
+    <div class="dash"></div>
+
+    <section class="budget-block">
+      <div class="budget-row">
+        <span id="budgetSpentLabel">$0.00 spent this month</span>
+        <span id="budgetLimitLabel">no limit set</span>
+      </div>
+      <div class="budget-track"><div class="budget-fill" id="budgetFill"></div></div>
+      <p class="budget-warning hidden" id="budgetWarning">You're over budget this month.</p>
+    </section>
+
+    <div class="dash"></div>
+
+    <section class="stats-row">
+      <div class="stat-card">
+        <p class="stat-label">Spent</p>
+        <p class="stat-value" id="statSpent">$0.00</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Biggest</p>
+        <p class="stat-value" id="statBiggest">$0.00</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Avg/day</p>
+        <p class="stat-value" id="statAvg">$0.00</p>
+      </div>
+    </section>
+
+    <div class="dash"></div>
 
     <section class="entry-form">
       <div class="field">
@@ -33,29 +75,50 @@
       </div>
       <div class="field field-small">
         <label for="category">CAT</label>
-        <select id="category">
-          <option value="Food">Food</option>
-          <option value="Transport">Transport</option>
-          <option value="Bills">Bills</option>
-          <option value="Fun">Fun</option>
-          <option value="Other">Other</option>
-        </select>
+        <select id="category"></select>
       </div>
+      <div class="field field-date">
+        <label for="dateInput">DATE</label>
+        <input type="date" id="dateInput">
+      </div>
+
+      <div class="new-cat-row hidden" id="newCatRow">
+        <input type="text" id="newCatName" placeholder="New category name" maxlength="16">
+        <button id="confirmNewCat">Add</button>
+        <button id="cancelNewCat" class="ghost">Cancel</button>
+      </div>
+
       <button id="addBtn">RING UP +</button>
     </section>
 
     <div class="dash"></div>
 
+    <section class="filter-tabs" id="filterTabs">
+      <button class="tab" data-range="today">Today</button>
+      <button class="tab" data-range="week">Week</button>
+      <button class="tab active" data-range="month">Month</button>
+      <button class="tab" data-range="all">All</button>
+    </section>
+
+    <section class="view-toggle" id="viewToggle">
+      <button class="view-btn active" data-view="list">List</button>
+      <button class="view-btn" data-view="chart">Chart</button>
+    </section>
+
     <section class="items" id="itemsList">
-      <!-- line items injected here -->
       <p class="empty" id="emptyMsg">— no purchases yet —</p>
+    </section>
+
+    <section class="chart-view hidden" id="chartView">
+      <canvas id="categoryChart" height="220"></canvas>
+      <p class="empty hidden" id="chartEmptyMsg">— nothing to chart for this period —</p>
     </section>
 
     <div class="dash"></div>
 
     <section class="totals">
       <div class="total-row grand">
-        <span>TOTAL</span>
+        <span>TOTAL (<span id="filterLabel">month</span>)</span>
         <span id="grandTotal">$0.00</span>
       </div>
     </section>
@@ -69,6 +132,12 @@
 
     <div class="dash"></div>
 
+    <section class="actions">
+      <button id="exportBtn">⬇ Export all as CSV</button>
+    </section>
+
+    <div class="dash"></div>
+
     <footer class="receipt-foot">
       <p>THANK YOU FOR TRACKING</p>
       <p class="barcode">▌▍▎▌▌▍▎▌▍▌▎▍▌▌▍▎▌▍▌▎▍</p>
@@ -77,9 +146,9 @@
 
     <div class="tear tear-bottom"></div>
   </div>
-
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
