@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger — Expense Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <div class="receipt">
+    <div class="tear tear-top"></div>
+
+    <header class="receipt-head">
+      <h1>LEDGER</h1>
+      <p class="sub">personal expense receipt</p>
+      <p class="date" id="today"></p>
+      <div class="dash"></div>
+    </header>
+
+    <section class="entry-form">
+      <div class="field">
+        <label for="desc">ITEM</label>
+        <input type="text" id="desc" placeholder="coffee, rent, taxi..." maxlength="28">
+      </div>
+      <div class="field field-small">
+        <label for="amount">AMT</label>
+        <input type="number" id="amount" placeholder="0.00" step="0.01" min="0">
+      </div>
+      <div class="field field-small">
+        <label for="category">CAT</label>
+        <select id="category">
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Bills">Bills</option>
+          <option value="Fun">Fun</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button id="addBtn">RING UP +</button>
+    </section>
+
+    <div class="dash"></div>
+
+    <section class="items" id="itemsList">
+      <!-- line items injected here -->
+      <p class="empty" id="emptyMsg">— no purchases yet —</p>
+    </section>
+
+    <div class="dash"></div>
+
+    <section class="totals">
+      <div class="total-row grand">
+        <span>TOTAL</span>
+        <span id="grandTotal">$0.00</span>
+      </div>
+    </section>
+
+    <div class="dash"></div>
+
+    <section class="breakdown">
+      <p class="breakdown-label">SPENDING BY CATEGORY</p>
+      <div id="categoryBars"></div>
+    </section>
+
+    <div class="dash"></div>
+
+    <footer class="receipt-foot">
+      <p>THANK YOU FOR TRACKING</p>
+      <p class="barcode">▌▍▎▌▌▍▎▌▍▌▎▍▌▌▍▎▌▍▌▎▍</p>
+      <p class="tiny">no refunds on regret purchases</p>
+    </footer>
+
+    <div class="tear tear-bottom"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

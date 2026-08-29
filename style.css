@@ -1,0 +1,249 @@
+:root {
+  --paper: #faf9f4;
+  --paper-shadow: #e8e6dc;
+  --ink: #232323;
+  --ink-soft: #6b6b63;
+  --red: #b3392c;
+  --green: #3c6e47;
+  --gold: #a9822f;
+  --mono: 'IBM Plex Mono', monospace;
+  --display: 'Archivo Black', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #d8d5c8;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 2px, transparent 2px, transparent 8px);
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+  font-family: var(--mono);
+  color: var(--ink);
+}
+
+.page {
+  width: 100%;
+  max-width: 420px;
+}
+
+.receipt {
+  background: var(--paper);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.1);
+  padding: 28px 26px 8px;
+  position: relative;
+}
+
+.tear {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background:
+    linear-gradient(135deg, transparent 50%, var(--paper) 50%) 0 0 / 14px 14px repeat-x;
+}
+.tear-top { top: -1px; }
+.tear-bottom {
+  bottom: -1px;
+  transform: rotate(180deg);
+}
+
+.receipt-head { text-align: center; }
+
+.receipt-head h1 {
+  font-family: var(--display);
+  font-size: 2.1rem;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.receipt-head .sub {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.receipt-head .date {
+  margin: 10px 0 0;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.dash {
+  border-top: 1.5px dashed var(--ink-soft);
+  opacity: 0.5;
+  margin: 16px 0;
+}
+
+.entry-form {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px;
+  gap: 8px 8px;
+  align-items: end;
+}
+
+.field { display: flex; flex-direction: column; }
+
+.field label {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.field input, .field select {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 7px 8px;
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+}
+
+.field input:focus, .field select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+#addBtn {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  padding: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#addBtn:hover { background: var(--red); }
+#addBtn:active { transform: translateY(1px); }
+
+.items { min-height: 20px; }
+
+.line-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 0.85rem;
+}
+
+.line-item .name {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.line-item .leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--ink-soft);
+  margin-bottom: 4px;
+  min-width: 10px;
+}
+
+.line-item .cat-tag {
+  font-size: 0.6rem;
+  color: var(--ink-soft);
+  margin-right: 6px;
+  letter-spacing: 0.05em;
+}
+
+.line-item .price { font-weight: 600; white-space: nowrap; }
+
+.line-item .del {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 0 0 8px;
+  line-height: 1;
+}
+
+.empty {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 10px 0;
+}
+
+.totals .total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.breakdown-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.cat-bar-row {
+  display: grid;
+  grid-template-columns: 62px 1fr 54px;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  margin-bottom: 6px;
+}
+
+.cat-bar-track {
+  height: 8px;
+  background: var(--paper-shadow);
+  position: relative;
+}
+
+.cat-bar-fill {
+  height: 100%;
+  background: var(--ink);
+}
+
+.cat-bar-row.Food .cat-bar-fill { background: var(--gold); }
+.cat-bar-row.Transport .cat-bar-fill { background: var(--green); }
+.cat-bar-row.Bills .cat-bar-fill { background: var(--red); }
+.cat-bar-row.Fun .cat-bar-fill { background: #6b5b95; }
+
+.cat-bar-amt { text-align: right; }
+
+.receipt-foot {
+  text-align: center;
+  padding-top: 6px;
+}
+
+.receipt-foot p {
+  margin: 4px 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.barcode {
+  font-size: 1.1rem !important;
+  letter-spacing: 1px !important;
+  margin: 10px 0 !important;
+}
+
+.tiny {
+  color: var(--ink-soft);
+  font-size: 0.6rem !important;
+  font-style: italic;
+}
+
+@media (max-width: 420px) {
+  .receipt-head h1 { font-size: 1.7rem; }
+  .entry-form { grid-template-columns: 1fr 60px 80px; }
+}
