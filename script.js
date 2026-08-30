@@ -576,9 +576,12 @@ document.querySelectorAll('.chip').forEach(chip => {
 function renderHome() {
   const hour = new Date().getHours();
   const timeGreeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-  const honorific = userGender === 'male' ? ', sir' : userGender === 'female' ? ", ma'am" : '';
+  let greetTarget;
+  if (userGender === 'male') greetTarget = `${userName || 'Friend'}, sir`;
+  else if (userGender === 'female') greetTarget = `${userName || 'Friend'}, ma'am`;
+  else greetTarget = userName || 'Friend';
   el('greeting').textContent = `${timeGreeting},`;
-  el('greetName').textContent = `${userName || 'friend'}${honorific}`;
+  el('greetName').textContent = greetTarget;
 
   const month = monthExpenses();
   const monthTotal = month.reduce((s, e) => s + e.amount, 0);
