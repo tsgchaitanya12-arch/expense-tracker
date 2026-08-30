@@ -10,6 +10,22 @@
 </head>
 <body>
 
+<div class="onboard-overlay" id="onboardOverlay">
+  <div class="onboard-card">
+    <h1 class="onboard-title">Welcome to Ledger</h1>
+    <p class="onboard-sub">Let's personalize your dashboard.</p>
+    <div class="field"><label for="onName">Your name</label><input type="text" id="onName" placeholder="Chaitanya" maxlength="20"></div>
+    <div class="field"><label for="onGender">How should we address you?</label>
+      <select id="onGender">
+        <option value="">Prefer not to say</option>
+        <option value="male">Sir</option>
+        <option value="female">Ma'am</option>
+      </select>
+    </div>
+    <button id="onboardStart">Get started</button>
+  </div>
+</div>
+
 <div class="app" id="app">
 
   <!-- ============ HOME ============ -->

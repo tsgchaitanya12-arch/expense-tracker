@@ -861,7 +861,25 @@ function render() {
   applyWidgetVisibility();
 }
 
+// ==================== Onboarding ====================
+function initOnboarding() {
+  const onboarded = localStorage.getItem('ledger-onboarded-v3');
+  if (onboarded) { el('onboardOverlay').classList.add('hidden'); return; }
+  el('onName').value = userName;
+  el('onGender').value = userGender;
+  el('onboardStart').addEventListener('click', () => {
+    userName = el('onName').value.trim();
+    userGender = el('onGender').value;
+    localStorage.setItem(K.NAME, userName);
+    localStorage.setItem(K.GENDER, userGender);
+    localStorage.setItem('ledger-onboarded-v3', 'true');
+    el('onboardOverlay').classList.add('hidden');
+    render();
+  });
+}
+
 // ==================== Init ====================
 initTheme();
 checkAchievements();
+initOnboarding();
 render();

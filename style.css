@@ -52,6 +52,15 @@ body {
 .screen { padding: 20px 18px 12px; }
 .hidden { display: none !important; }
 
+.onboard-overlay {
+  position: fixed; inset: 0; background: var(--bg); z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+.onboard-card { width: 100%; max-width: 340px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; }
+.onboard-title { font-family: var(--display); font-size: 1.4rem; font-weight: 700; margin: 0 0 4px; text-align: center; }
+.onboard-sub { font-size: 0.85rem; color: var(--text-soft); text-align: center; margin: 0 0 20px; }
+#onboardStart { width: 100%; padding: 12px; border-radius: 12px; border: none; background: var(--accent); color: #06251c; font-weight: 600; font-size: 0.9rem; cursor: pointer; margin-top: 4px; }
+
 .screen-title { font-family: var(--display); font-size: 1.3rem; font-weight: 700; margin: 4px 0 16px; }
 
 /* ---- Hero ---- */
