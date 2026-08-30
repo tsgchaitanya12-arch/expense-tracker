@@ -3,83 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ledger — Expense Tracker</title>
+<title>Ledger — Smart Expense Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="page">
-  <div class="receipt" id="receipt">
-    <div class="tear tear-top"></div>
+<div class="app" id="app">
 
-    <header class="receipt-head">
-      <div class="head-row">
-        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
-        <div class="head-titles">
-          <h1>LEDGER</h1>
-          <p class="sub">personal expense receipt</p>
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="screen-home">
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="greeting" id="greeting">Good evening,</p>
+          <p class="greet-name" id="greetName">friend</p>
         </div>
-        <button id="settingsToggle" class="icon-btn" aria-label="Budget settings" title="Budget settings">⚙</button>
+        <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
       </div>
-      <p class="date" id="today"></p>
+
+      <p class="balance-label">available this month</p>
+      <p class="balance" id="availableBalance">$0.00</p>
+
+      <div class="budget-track"><div class="budget-fill" id="budgetFill"></div></div>
+      <div class="budget-caption">
+        <span id="budgetSpentCaption">$0 spent</span>
+        <span id="budgetLimitCaption">no limit set</span>
+      </div>
+      <p class="trend" id="trendLine"></p>
     </header>
 
-    <section class="settings-panel hidden" id="settingsPanel">
-      <label for="budgetInput">Monthly budget ($)</label>
-      <div class="settings-row">
-        <input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1">
-        <button id="saveBudget">Save</button>
-      </div>
-    </section>
+    <div id="anomalyBanner" class="anomaly-banner hidden"></div>
 
-    <div class="dash"></div>
+    <div class="card" id="digestCard">
+      <p class="card-title">Your month so far</p>
+      <p class="digest-text" id="digestText"></p>
+    </div>
 
-    <section class="budget-block">
-      <div class="budget-row">
-        <span id="budgetSpentLabel">$0.00 spent this month</span>
-        <span id="budgetLimitLabel">no limit set</span>
+    <div class="ring-block" id="ringBlock">
+      <svg viewBox="0 0 140 140" class="ring-svg">
+        <circle cx="70" cy="70" r="58" class="ring-track"></circle>
+        <circle cx="70" cy="70" r="58" class="ring-fill" id="ringFill"></circle>
+      </svg>
+      <div class="ring-center">
+        <p class="ring-cat" id="ringCat">—</p>
+        <p class="ring-amt" id="ringAmt">$0.00</p>
+        <p class="ring-pct" id="ringPct">0% of spend</p>
       </div>
-      <div class="budget-track"><div class="budget-fill" id="budgetFill"></div></div>
-      <p class="budget-warning hidden" id="budgetWarning">You're over budget this month.</p>
-    </section>
+    </div>
 
-    <div class="dash"></div>
+    <div class="card-row" id="todayMonthBlock">
+      <div class="card">
+        <p class="card-title">Today</p>
+        <div id="todayList" class="mini-list"></div>
+      </div>
+      <div class="card">
+        <p class="card-title">This month</p>
+        <div id="monthList" class="mini-list"></div>
+      </div>
+    </div>
 
-    <section class="stats-row">
-      <div class="stat-card">
-        <p class="stat-label">Spent</p>
-        <p class="stat-value" id="statSpent">$0.00</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-label">Biggest</p>
-        <p class="stat-value" id="statBiggest">$0.00</p>
-      </div>
-      <div class="stat-card">
-        <p class="stat-label">Avg/day</p>
-        <p class="stat-value" id="statAvg">$0.00</p>
-      </div>
-    </section>
+    <div class="card" id="heartbeatBlock">
+      <p class="card-title">Spending activity today</p>
+      <div class="heartbeat" id="heartbeat"></div>
+    </div>
 
-    <div class="dash"></div>
+    <div class="card" id="forecastBlock">
+      <p class="card-title">Month-end forecast</p>
+      <div class="forecast-rows">
+        <div class="forecast-row"><span>Current spending</span><span id="forecastCurrent">$0.00</span></div>
+        <div class="forecast-row"><span>Projected spending</span><span id="forecastProjected">$0.00</span></div>
+      </div>
+      <div class="budget-track"><div class="budget-fill" id="forecastFill"></div></div>
+      <p class="forecast-warning hidden" id="forecastWarning"></p>
+    </div>
+  </section>
 
-    <section class="entry-form">
-      <div class="field">
-        <label for="desc">ITEM</label>
-        <input type="text" id="desc" placeholder="coffee, rent, taxi..." maxlength="28">
+  <!-- ============ ADD ============ -->
+  <section class="screen hidden" id="screen-add">
+    <h2 class="screen-title">Add an expense</h2>
+
+    <div class="capture-tabs" id="captureTabs">
+      <button class="cap-tab active" data-cap="manual">✍️ Manual</button>
+      <button class="cap-tab" data-cap="voice">🎤 Voice</button>
+      <button class="cap-tab" data-cap="paste">📋 Paste</button>
+      <button class="cap-tab" data-cap="import">📧 Import</button>
+    </div>
+
+    <div class="cap-panel" id="cap-manual">
+      <div class="field"><label for="desc">Item / merchant</label><input type="text" id="desc" placeholder="Zomato, rent, taxi..." maxlength="32"></div>
+      <div class="field-grid">
+        <div class="field"><label for="amount">Amount</label><input type="number" id="amount" placeholder="0.00" step="0.01" min="0"></div>
+        <div class="field"><label for="category">Category</label><select id="category"></select></div>
       </div>
-      <div class="field field-small">
-        <label for="amount">AMT</label>
-        <input type="number" id="amount" placeholder="0.00" step="0.01" min="0">
+      <div class="field-grid">
+        <div class="field"><label for="dateInput">Date</label><input type="date" id="dateInput"></div>
+        <div class="field"><label for="timeInput">Time</label><input type="time" id="timeInput"></div>
       </div>
-      <div class="field field-small">
-        <label for="category">CAT</label>
-        <select id="category"></select>
-      </div>
-      <div class="field field-date">
-        <label for="dateInput">DATE</label>
-        <input type="date" id="dateInput">
+
+      <div class="field-grid">
+        <div class="field"><label for="paymentMethod">Payment method</label>
+          <select id="paymentMethod"><option>UPI</option><option>Card</option><option>Cash</option><option>Other</option></select>
+        </div>
+        <div class="field"><label for="tagsInput">Tags (comma separated)</label><input type="text" id="tagsInput" placeholder="college, essential"></div>
       </div>
 
       <div class="new-cat-row hidden" id="newCatRow">
@@ -88,64 +115,158 @@
         <button id="cancelNewCat" class="ghost">Cancel</button>
       </div>
 
-      <button id="addBtn">RING UP +</button>
-    </section>
-
-    <div class="dash"></div>
-
-    <section class="filter-tabs" id="filterTabs">
-      <button class="tab" data-range="today">Today</button>
-      <button class="tab" data-range="week">Week</button>
-      <button class="tab active" data-range="month">Month</button>
-      <button class="tab" data-range="all">All</button>
-    </section>
-
-    <section class="view-toggle" id="viewToggle">
-      <button class="view-btn active" data-view="list">List</button>
-      <button class="view-btn" data-view="chart">Chart</button>
-    </section>
-
-    <section class="items" id="itemsList">
-      <p class="empty" id="emptyMsg">— no purchases yet —</p>
-    </section>
-
-    <section class="chart-view hidden" id="chartView">
-      <canvas id="categoryChart" height="220"></canvas>
-      <p class="empty hidden" id="chartEmptyMsg">— nothing to chart for this period —</p>
-    </section>
-
-    <div class="dash"></div>
-
-    <section class="totals">
-      <div class="total-row grand">
-        <span>TOTAL (<span id="filterLabel">month</span>)</span>
-        <span id="grandTotal">$0.00</span>
+      <div class="field">
+        <label for="photoInput">Attach a photo (optional)</label>
+        <input type="file" id="photoInput" accept="image/*" capture="environment">
+        <p class="hint">Saved with the entry — details still need to be filled in above, this app doesn't auto-read receipts.</p>
+        <img id="photoPreview" class="photo-preview hidden">
       </div>
-    </section>
 
-    <div class="dash"></div>
+      <button id="addBtn">Add expense</button>
+    </div>
 
-    <section class="breakdown">
-      <p class="breakdown-label">SPENDING BY CATEGORY</p>
-      <div id="categoryBars"></div>
-    </section>
+    <div class="cap-panel hidden" id="cap-voice">
+      <p class="hint">Tap the mic and say something like "Spent 280 on dinner". Uses your browser's built-in speech recognition — nothing leaves your device to a third-party AI.</p>
+      <button id="voiceBtn" class="voice-btn">🎤 Tap to speak</button>
+      <p class="voice-status" id="voiceStatus"></p>
+    </div>
 
-    <div class="dash"></div>
+    <div class="cap-panel hidden" id="cap-paste">
+      <label for="pasteInput">Paste an SMS or bank transaction line</label>
+      <textarea id="pasteInput" rows="3" placeholder="e.g. Spent Rs.280 at Zomato on 12-08-2026"></textarea>
+      <button id="parsePasteBtn">Parse</button>
+      <p class="hint">This is a best-effort text parser, not a bank connection — always double check the fields before adding.</p>
+    </div>
 
-    <section class="actions">
-      <button id="exportBtn">⬇ Export all as CSV</button>
-    </section>
+    <div class="cap-panel hidden" id="cap-import">
+      <label for="csvImportInput">Import a CSV (Date,Item,Category,Amount)</label>
+      <input type="file" id="csvImportInput" accept=".csv">
+      <p class="hint">Matches the format this app exports — great for restoring a backup or bulk-adding old transactions.</p>
+      <button class="ghost-btn" id="bankConnectBtn" disabled title="Needs a secure backend — not included in this static app">🔗 Connect bank / UPI (coming later)</button>
+    </div>
+  </section>
 
-    <div class="dash"></div>
+  <!-- ============ VAULT ============ -->
+  <section class="screen hidden" id="screen-vault">
+    <h2 class="screen-title">Receipt vault</h2>
+    <input type="search" id="vaultSearch" class="vault-search" placeholder="Search receipts...">
+    <select id="vaultCategoryFilter" class="vault-filter"></select>
+    <div id="vaultList" class="vault-list"></div>
+  </section>
 
-    <footer class="receipt-foot">
-      <p>THANK YOU FOR TRACKING</p>
-      <p class="barcode">▌▍▎▌▌▍▎▌▍▌▎▍▌▌▍▎▌▍▌▎▍</p>
-      <p class="tiny">no refunds on regret purchases</p>
-    </footer>
+  <!-- ============ GOALS ============ -->
+  <section class="screen hidden" id="screen-goals">
+    <h2 class="screen-title">Goals</h2>
 
-    <div class="tear tear-bottom"></div>
-  </div>
+    <div class="card">
+      <p class="card-title">New goal</p>
+      <div class="field"><label for="goalName">Goal name</label><input type="text" id="goalName" placeholder="Gaming PC, Travel fund..." maxlength="28"></div>
+      <div class="field-grid">
+        <div class="field"><label for="goalTarget">Target amount</label><input type="number" id="goalTarget" placeholder="70000" min="0"></div>
+        <div class="field"><label for="goalMonthly">Monthly contribution</label><input type="number" id="goalMonthly" placeholder="2500" min="0"></div>
+      </div>
+      <button id="addGoalBtn">Create goal</button>
+    </div>
+
+    <div id="goalsList"></div>
+  </section>
+
+  <!-- ============ INSIGHTS ============ -->
+  <section class="screen hidden" id="screen-insights">
+    <h2 class="screen-title">Insights</h2>
+
+    <div class="card">
+      <p class="card-title">Spending by category</p>
+      <canvas id="categoryChart" height="200"></canvas>
+      <p class="empty hidden" id="chartEmptyMsg">— nothing to chart yet —</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Spending heatmap</p>
+      <div id="heatmap" class="heatmap"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Time-of-day pattern</p>
+      <p id="timeInsight" class="insight-text">Log a few more expenses to unlock this insight.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Top merchants</p>
+      <div id="merchantRanking" class="mini-list"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">"What if" simulator</p>
+      <div class="field"><label for="whatIfInput">Spend this much less per week</label><input type="number" id="whatIfInput" placeholder="e.g. 500" min="0"></div>
+      <div class="whatif-rows">
+        <div class="whatif-row"><span>Current path (6 months)</span><span id="whatIfCurrent">$0.00</span></div>
+        <div class="whatif-row highlight"><span>Smart path (6 months)</span><span id="whatIfSmart">$0.00</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Ask about your spending</p>
+      <p class="hint">Runs entirely in your browser against your own data — a local Q&amp;A helper, not a connected AI.</p>
+      <div class="assistant-suggestions">
+        <button class="chip" data-q="Where did my money go?">Where did my money go?</button>
+        <button class="chip" data-q="Where am I spending too much?">Where am I spending too much?</button>
+        <button class="chip" data-q="Compare this month">Compare this month</button>
+      </div>
+      <div class="assistant-row">
+        <input type="text" id="assistantInput" placeholder="Ask me anything about your spending...">
+        <button id="assistantAsk">Ask</button>
+      </div>
+      <div id="assistantAnswer" class="assistant-answer"></div>
+    </div>
+  </section>
+
+  <!-- ============ ME ============ -->
+  <section class="screen hidden" id="screen-me">
+    <h2 class="screen-title">Me</h2>
+
+    <div class="card health-card">
+      <p class="card-title">Financial health score</p>
+      <p class="health-score" id="healthScore">50<span>/100</span></p>
+      <p class="health-note">A fun local metric based on your own habits — not a judgment. Here's exactly how it's calculated:</p>
+      <div id="healthBreakdown" class="health-breakdown"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Streak &amp; achievements</p>
+      <p class="streak" id="streakLine">🔥 0-day logging streak</p>
+      <div id="achievements" class="achievements"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Settings</p>
+      <div class="field"><label for="nameInput">Your name</label><input type="text" id="nameInput" placeholder="Chaitanya" maxlength="20"></div>
+      <div class="field"><label for="budgetInput">Monthly budget ($)</label><input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1"></div>
+      <button id="saveSettings">Save settings</button>
+      <button id="exportBtn" class="ghost-btn">⬇ Export all as CSV</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Customize your home screen</p>
+      <div class="widget-toggles" id="widgetToggles">
+        <label><input type="checkbox" data-widget="digestCard" checked> Monthly digest</label>
+        <label><input type="checkbox" data-widget="ringBlock" checked> Category ring</label>
+        <label><input type="checkbox" data-widget="todayMonthBlock" checked> Today / month cards</label>
+        <label><input type="checkbox" data-widget="heartbeatBlock" checked> Spending timeline</label>
+        <label><input type="checkbox" data-widget="forecastBlock" checked> Month-end forecast</label>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab-btn active" data-screen="home"><span>🏠</span>Home</button>
+    <button class="tab-btn" data-screen="add"><span>➕</span>Add</button>
+    <button class="tab-btn" data-screen="vault"><span>🧾</span>Vault</button>
+    <button class="tab-btn" data-screen="goals"><span>🎯</span>Goals</button>
+    <button class="tab-btn" data-screen="insights"><span>📊</span>Insights</button>
+    <button class="tab-btn" data-screen="me"><span>🙂</span>Me</button>
+  </nav>
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
