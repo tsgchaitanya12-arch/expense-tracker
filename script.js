@@ -43,7 +43,7 @@ function nowTimeStr() { const d = new Date(); return d.toTimeString().slice(0, 5
 function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
 function colorHex(varName) { return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#888'; }
 function categoryColor(name) { const c = categories.find(c => c.name === name); return c ? c.color : '--cat-5'; }
-function fmt(n) { return `$${n.toFixed(2)}`; }
+function fmt(n) { return `₹${n.toFixed(2)}`; }
 function dateObj(dateStr) { return new Date(dateStr + 'T00:00:00'); }
 
 function monthExpenses(dateOffsetMonths = 0) {
@@ -619,7 +619,7 @@ function renderHome() {
     el('ringFill').style.strokeDashoffset = circumference * (1 - share);
   } else {
     el('ringCat').textContent = '—';
-    el('ringAmt').textContent = '$0.00';
+    el('ringAmt').textContent = '₹0.00';
     el('ringPct').textContent = '0% of spend';
     el('ringFill').style.strokeDashoffset = circumference;
   }

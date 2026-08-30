@@ -40,11 +40,11 @@
       </div>
 
       <p class="balance-label">available this month</p>
-      <p class="balance" id="availableBalance">$0.00</p>
+      <p class="balance" id="availableBalance">₹0.00</p>
 
       <div class="budget-track"><div class="budget-fill" id="budgetFill"></div></div>
       <div class="budget-caption">
-        <span id="budgetSpentCaption">$0 spent</span>
+        <span id="budgetSpentCaption">₹0 spent</span>
         <span id="budgetLimitCaption">no limit set</span>
       </div>
       <p class="trend" id="trendLine"></p>
@@ -64,7 +64,7 @@
       </svg>
       <div class="ring-center">
         <p class="ring-cat" id="ringCat">—</p>
-        <p class="ring-amt" id="ringAmt">$0.00</p>
+        <p class="ring-amt" id="ringAmt">₹0.00</p>
         <p class="ring-pct" id="ringPct">0% of spend</p>
       </div>
     </div>
@@ -88,8 +88,8 @@
     <div class="card" id="forecastBlock">
       <p class="card-title">Month-end forecast</p>
       <div class="forecast-rows">
-        <div class="forecast-row"><span>Current spending</span><span id="forecastCurrent">$0.00</span></div>
-        <div class="forecast-row"><span>Projected spending</span><span id="forecastProjected">$0.00</span></div>
+        <div class="forecast-row"><span>Current spending</span><span id="forecastCurrent">₹0.00</span></div>
+        <div class="forecast-row"><span>Projected spending</span><span id="forecastProjected">₹0.00</span></div>
       </div>
       <div class="budget-track"><div class="budget-fill" id="forecastFill"></div></div>
       <p class="forecast-warning hidden" id="forecastWarning"></p>
@@ -216,8 +216,8 @@
       <p class="card-title">"What if" simulator</p>
       <div class="field"><label for="whatIfInput">Spend this much less per week</label><input type="number" id="whatIfInput" placeholder="e.g. 500" min="0"></div>
       <div class="whatif-rows">
-        <div class="whatif-row"><span>Current path (6 months)</span><span id="whatIfCurrent">$0.00</span></div>
-        <div class="whatif-row highlight"><span>Smart path (6 months)</span><span id="whatIfSmart">$0.00</span></div>
+        <div class="whatif-row"><span>Current path (6 months)</span><span id="whatIfCurrent">₹0.00</span></div>
+        <div class="whatif-row highlight"><span>Smart path (6 months)</span><span id="whatIfSmart">₹0.00</span></div>
       </div>
     </div>
 
@@ -264,7 +264,7 @@
           <option value="female">Female</option>
         </select>
       </div>
-      <div class="field"><label for="budgetInput">Monthly budget ($)</label><input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1"></div>
+      <div class="field"><label for="budgetInput">Monthly budget (₹)</label><input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1"></div>
       <button id="saveSettings">Save settings</button>
       <button id="exportBtn" class="ghost-btn">⬇ Export all as CSV</button>
     </div>
