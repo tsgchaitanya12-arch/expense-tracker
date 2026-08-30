@@ -84,9 +84,16 @@ full product vision and exactly which features (receipt OCR, a real AI
 copilot, bank/UPI sync, cross-device backup) need a real backend, plus
 the architecture for building them properly.
 
-## Screenshot
+## Screenshots
 
-![Ledger app screenshot](screenshot.png)
+**Home dashboard**
+![Ledger home screenshot](screenshot-home.png)
+
+**Smart capture**
+![Ledger add expense screenshot](screenshot-add.png)
+
+**Profile and settings**
+![Ledger me screenshot](screenshot-me.png)
 
 ## License
 
