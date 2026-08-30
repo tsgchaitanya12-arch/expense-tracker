@@ -5,6 +5,7 @@ const K = {
   BUDGET: 'ledger-budget-v3',
   THEME: 'ledger-theme-v3',
   NAME: 'ledger-name-v3',
+  GENDER: 'ledger-gender-v3',
   ACHIEVEMENTS: 'ledger-achievements-v3',
   GOALS: 'ledger-goals-v3',
   WIDGETS: 'ledger-widgets-v3',
@@ -29,6 +30,7 @@ let expenses = loadJSON(K.EXPENSES, []);
 let categories = loadJSON(K.CATEGORIES, DEFAULT_CATEGORIES);
 let budgetLimit = loadJSON(K.BUDGET, null);
 let userName = localStorage.getItem(K.NAME) || '';
+let userGender = localStorage.getItem(K.GENDER) || '';
 let unlockedAchievements = loadJSON(K.ACHIEVEMENTS, []);
 let goals = loadJSON(K.GOALS, []);
 let widgetVisibility = loadJSON(K.WIDGETS, { digestCard: true, ringBlock: true, todayMonthBlock: true, heartbeatBlock: true, forecastBlock: true });
@@ -503,6 +505,8 @@ function renderHealthBreakdown() {
 el('saveSettings').addEventListener('click', () => {
   userName = el('nameInput').value.trim();
   localStorage.setItem(K.NAME, userName);
+  userGender = el('genderInput').value;
+  localStorage.setItem(K.GENDER, userGender);
   const val = parseFloat(el('budgetInput').value);
   budgetLimit = isNaN(val) || val <= 0 ? null : val;
   saveJSON(K.BUDGET, budgetLimit);
@@ -570,9 +574,11 @@ document.querySelectorAll('.chip').forEach(chip => {
 
 // ==================== Render: Home ====================
 function renderHome() {
-  el('greetName').textContent = userName || 'friend';
   const hour = new Date().getHours();
-  el('greeting').textContent = hour < 12 ? 'Good morning,' : hour < 18 ? 'Good afternoon,' : 'Good evening,';
+  const timeGreeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  const honorific = userGender === 'male' ? ', sir' : userGender === 'female' ? ", ma'am" : '';
+  el('greeting').textContent = `${timeGreeting},`;
+  el('greetName').textContent = `${userName || 'friend'}${honorific}`;
 
   const month = monthExpenses();
   const monthTotal = month.reduce((s, e) => s + e.amount, 0);
@@ -824,6 +830,7 @@ function renderWhatIf() {
 // ==================== Render: Me ====================
 function renderMe() {
   el('nameInput').value = userName;
+  el('genderInput').value = userGender;
   el('budgetInput').value = budgetLimit || '';
   el('healthScore').innerHTML = `${healthScore()}<span>/100</span>`;
   el('streakLine').textContent = `🔥 ${calcStreak()}-day logging streak`;

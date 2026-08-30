@@ -241,6 +241,13 @@
     <div class="card">
       <p class="card-title">Settings</p>
       <div class="field"><label for="nameInput">Your name</label><input type="text" id="nameInput" placeholder="Chaitanya" maxlength="20"></div>
+      <div class="field"><label for="genderInput">How should we address you?</label>
+        <select id="genderInput">
+          <option value="">Prefer not to say</option>
+          <option value="male">Sir</option>
+          <option value="female">Ma'am</option>
+        </select>
+      </div>
       <div class="field"><label for="budgetInput">Monthly budget ($)</label><input type="number" id="budgetInput" placeholder="e.g. 500" min="0" step="1"></div>
       <button id="saveSettings">Save settings</button>
       <button id="exportBtn" class="ghost-btn">⬇ Export all as CSV</button>
